@@ -6,8 +6,7 @@ classdef pTimesQPlots %< handle
         
         
         function [out]=makeFullChart(figHandle,dataStruct)
-            whData=[dataStruct.impressions/10^9; dataStruct.revenue./dataStruct.impressions*1000];
-            whData=whData';
+            whData=pTimesQPlots.makeWHData(dataStruct);
             pTimesQPlots.createPQPlot(figHandle,whData,pTimesQPlots.colors );
             figure(figHandle);
             revData=whData(:,1).*whData(:,2);
@@ -43,7 +42,11 @@ classdef pTimesQPlots %< handle
         end
         
         
-        
+        function [out]=makeWHData(dataStruct)
+            whData=[dataStruct.impressions/10^9; dataStruct.revenue./dataStruct.impressions*1000];
+            out=whData';
+            
+        end
         
         function [out]=getAxesLimits(whData)
             out=[sum(whData(:,1),1) max(whData(:,2),[],1)];
